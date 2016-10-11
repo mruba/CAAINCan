@@ -3,7 +3,11 @@
     <md-card-header class="md-display-2">
           Agenda CAAINCan
     </md-card-header>
-     <md-card-content>
+     <md-card-content >
+
+         <md-button class="md-raised" ng-click="$ctrl.createAppointment()">Crear Cita</md-button>
+
+
 
        <div ui-calendar="$ctrl.uiConfig.calendar" ng-model="$ctrl.eventSources"></div>
 
