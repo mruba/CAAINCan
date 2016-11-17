@@ -1,12 +1,12 @@
  <md-content class="md-padding" layout="row">
    <md-card flex="100" layout-align="center center">
     <md-card-header class="md-display-2">
-          Agenda CAAINCan
+          Agenda CAAINCan {{$ctrl.events.length}} 
     </md-card-header>
      <md-card-content >
-<!--
-         <md-button class="md-raised" ng-click="$ctrl.createAppointment()">Crear Cita</md-button>
- -->
+
+         <!-- <md-button class="md-raised" ng-click="handleAuthClick()">Crear Cita</md-button> -->
+
 
 
        <div ui-calendar="$ctrl.uiConfig.calendar" ng-model="$ctrl.eventSources"></div>
