@@ -1,0 +1,93 @@
+<md-dialog aria-label="Address" layout="column">
+
+  <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{date.format("dddd, D [de] MMMM YYYY")}} {{time}}:<span ng-if="timeMinutes">{{timeMinutes}}</span><span ng-if="!timeMinutes">00</span>hrs</h2>
+        <!-- h:mm a -->
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancelDialog()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+
+    <div layout="column">
+      <form name="search" flex="">
+        <div class="md-block">
+
+        </div>
+        <div class="md-block" ng-if="!showAppointment">
+          <div flex="" layout layout-align="left center">
+            <h4>Hora de la cita: {{time}}:<span ng-if="timeMinutes">{{timeMinutes}}</span><span ng-if="!timeMinutes">00</span>hrs</h4>
+          </div>
+          <md-slider flex md-discrete ng-model="time" step="1" min="9" max="13" aria-label="rating">
+          </md-slider>
+          <md-slider flex md-discrete ng-model="timeMinutes" step="30" min="0" max="30" aria-label="rating">
+          </md-slider>
+        </div>
+        <div class="md-block" ng-if="showAppointment">
+          <h4>Para realizar cambios en los horarios, arrastra el evento en el calendario.</h4>
+        </div>
+        <br>
+        <md-input-container  class="md-block ">
+          <label>Nombre</label>
+          <input type="text" ng-model="data.name">
+        </md-input-container>
+        <md-input-container  class="md-block ">
+          <label>Edad</label>
+          <input type="text" ng-model="data.procede">
+        </md-input-container>
+        <!-- <md-input-container class="md-block">
+         <label>Tipo de población</label>
+         <md-select ng-model="user.state">
+           <md-option ng-repeat="type in poblation" value="{{type.code}}">
+             {{type.name}}
+           </md-option>
+         </md-select>
+       </md-input-container> -->
+
+        <md-input-container  class="md-block ">
+          <label>Expediente</label>
+          <input type="text" ng-model="data.expediente">
+        </md-input-container>
+        <md-input-container  class="md-block ">
+          <label>Email</label>
+          <input type="text" ng-model="data.email">
+        </md-input-container>
+        <md-input-container  class="md-block ">
+          <label>Telefono</label>
+          <input type="text" ng-model="data.phone">
+        </md-input-container>
+        <h4>Tipo de población</h4>
+        <md-input-container  class="md-block ">
+          <md-radio-group ng-model="data.tipo" layout="row" layout-align="left center">
+            <md-radio-button value="primera-vez" class="md-primary">Primera vez</md-radio-button>
+            <md-radio-button value="subsecuente"> Subsecuente </md-radio-button>
+          </md-radio-group>
+        </md-input-container>
+        <md-input-container  class="md-block ">
+          <md-radio-group ng-model="data.poblacion" layout="row" layout-align="left center">
+            <md-radio-button value="personal-incan" class="perona-incan">Personal del INCan</md-radio-button>
+            <md-radio-button value="paciente" class="md-primary">Paciente</md-radio-button>
+            <md-radio-button value="familiar"> Familiar </md-radio-button>
+          </md-radio-group>
+        </md-input-container>
+        <md-input-container class="md-block ">
+          <md-checkbox ng-model="data.asistio" aria-label="asistió" layout="row" layout-align="left center">
+              Asistió
+            </md-checkbox>
+        </md-input-container>
+
+      </form>
+      <md-button ng-click="saveInfo()" class="md-raised md-primary">Guardar</md-button>
+      <md-button ng-click="deleteAppointment()" class="md-raised md-warn" ng-if="showAppointment">Borrar</md-button>
+        </div>
+      </md-dialog-content>
+    </div>
+
+
+
+</md-dialog>

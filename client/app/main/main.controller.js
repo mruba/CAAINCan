@@ -12,6 +12,7 @@
       this.eventSources = [];
       this.events = [];
       this.viewDates = {};
+      this.loading = true;
       //this.uiConfig = {calendar:{}};
       this.mdDialog = $mdDialog;
 
@@ -23,6 +24,8 @@
       this.uiConfig = {
         calendar:{
           timezone: 'UTC',
+          defaultView: 'agendaWeek',
+          slotEventOverlap: false,
           locale: 'es',
           dayNames : ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
           monthNames : ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio', 'Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -31,9 +34,10 @@
             today:'Hoy',
             month: 'Mes',
             week: 'Semana',
-            day: 'Dia'
+            day: 'Día'
           },
           editable: true,
+          eventDurationEditable: false,
           header:{
             left: 'month agendaWeek agendaDay',
             center: 'title',
@@ -45,9 +49,15 @@
             start: '9:00', // a start time (10am in this example)
             end: '13:30'// an end time (6pm in this example)
           },
+          eventDrop: function(event, delta) {
+            console.log(event);
+            //we are ready to patch the new event
+            this.editAppointment(event);
+          }.bind(this),
           viewRender: function(view) {
             console.log(view.intervalStart.toJSON());
             console.log(view.intervalEnd.toJSON());
+
             this.viewDates.start = view.intervalStart.toJSON();
             this.viewDates.end = view.intervalEnd.toJSON();
             this.indexAppointments();
@@ -61,7 +71,6 @@
             // console.log(view.intervalEnd);
           }.bind(this),
           eventClick: function(event) {
-            console.log(event);
             // this.createAppointment(event);
             this.showAppointment(event);
           }.bind(this),
@@ -73,6 +82,7 @@
     }
 
     indexAppointments(){
+      this.loading = true;
       var config = {
         method: 'GET',
         url: '/api/appointments',
@@ -81,11 +91,37 @@
 
       this.$http(config).then(function(response){
           // this.awesomeThings = response.data;
+          console.log(response);
+          this.events.length = 0;
           _.each(response.data, function(appointment) {
             var start = new Date(appointment.start);
             var end = new Date(appointment.end);
-            this.events.push({title: appointment.title, start:start , end: end, id: appointment._id, timezone: 'UTC'});
+            // let color;
+            let color = appointment.type == 'primera-vez' ? '#ff0000' : '#00BCD4';
+
+            // switch (appointment.poblacion) {
+            //   // case 'primera-vez':
+            //   //   color = '#ff0000';
+            //   //   break;
+            //   case 'paciente':
+            //     color = 'blue';
+            //     break;
+            //   case 'familiar':
+            //     color = 'green';
+            //     break;
+            //   case 'personal-incan':
+            //     color = 'red';
+            //     break;
+            //   default:
+            //     color = '#00BCD4';
+            // }
+            //primera-vez = morado
+            //paciente = azul paciente
+            //familiar = verde familiar
+            //incan = rojo personal-incan
+            this.events.push({title: appointment.title, start:start , end: end, _id: appointment._id, timezone: 'UTC', color : color});
           }.bind(this));
+          this.loading = false;
         }.bind(this));
     }
 
@@ -95,6 +131,7 @@
       //this.indexAppointments();
       this.socket.syncUpdates('appointment', this.events);
       this.eventSources = [this.events];
+      console.log(this.eventSources);
     }
 
     addAppointment(data){
@@ -102,9 +139,21 @@
       // var d = date.getDate();
       // var m = date.getMonth();
       // var y = date.getFullYear();
+      console.log('apoitment added');
       this.events.push(data);
-      console.log(this.events);
 
+    }
+
+    editAppointment(event){
+      var eventData = {
+          // id: event.id,
+          start: event.start._d,
+          end: event.end._d,
+        };
+      this.$http.patch(`/api/appointments/${event._id}`, eventData)
+        .then(function(response){
+          console.log(response);
+        });
     }
 
     showAppointment(data){
@@ -136,6 +185,7 @@
         //we  save the order only if the promise was succesfully
         // this.addAppointment(data);
         // this.events.push(data);
+        console.log(data);
         console.log(this.eventSources);
       }.bind(this));
     }
@@ -154,6 +204,7 @@
       clickOutsideToClose: true,
       bindToController: true,
       disableParentScroll: true,
+
 
       focusOnOpen: false,
       fullscreen: true,

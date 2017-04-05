@@ -1,15 +1,23 @@
  <md-content class="md-padding" layout="row">
    <md-card flex="100" layout-align="center center">
-    <md-card-header class="md-display-2">
-          Agenda CAAINCan {{$ctrl.events.length}} 
+     <md-progress-linear md-mode="indeterminate" ng-if="$ctrl.loading"></md-progress-linear>
+
+    <md-card-header class="md-display-2" >
+      <span ng-show="!$ctrl.loading">Agenda CAAINCan</span>
+      <span ng-show="$ctrl.loading">Cargando Información</span>
+
     </md-card-header>
+
      <md-card-content >
 
          <!-- <md-button class="md-raised" ng-click="handleAuthClick()">Crear Cita</md-button> -->
 
 
 
-       <div ui-calendar="$ctrl.uiConfig.calendar" ng-model="$ctrl.eventSources"></div>
+       <div ui-calendar="$ctrl.uiConfig.calendar" ng-model="$ctrl.eventSources" ></div>
+       <!-- <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!$ctrl.loading">
+        <md-progress-circular md-mode="indeterminate"  class="md-accent md-hue-1"></md-progress-circular>
+      </div> -->
 
      </md-card-content>
 

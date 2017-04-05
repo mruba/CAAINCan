@@ -5,7 +5,8 @@
   class AdminController {
     constructor(User) {
       // Use the User $resource to fetch all users
-      this.users = User.query();
+      // this.users = User.query();
+      // console.log(User.query());
     }
 
     delete(user) {

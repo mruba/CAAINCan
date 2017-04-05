@@ -34,6 +34,8 @@ angular.module('caaincanApp')
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function(item) {
+          console.log("new socket event");
+          console.log(item);
           var oldItem = _.find(array, {
             _id: item._id
           });
@@ -42,6 +44,8 @@ angular.module('caaincanApp')
 
           // replace oldItem if it exists
           // otherwise just add item to the collection
+          var color = item.type === 'primera-vez' ? '#ff0000' : '#00BCD4';
+          item['color'] = color;
           if (oldItem) {
             array.splice(index, 1, item);
             event = 'updated';
