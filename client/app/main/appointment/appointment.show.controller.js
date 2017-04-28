@@ -26,7 +26,8 @@ angular.module('caaincanApp').controller('appointmentShowCtrl', function ($scope
         email: response.data.email,
         phone: response.data.telefono,
         tipo: response.data.type,
-        poblacion: response.data.poblacion
+        poblacion: response.data.poblacion,
+        asistio: response.data.asistio
       };
     });
 
@@ -63,7 +64,9 @@ angular.module('caaincanApp').controller('appointmentShowCtrl', function ($scope
         end: endTime._d,
         className: ['openSesame'],
         timezone: 'UTC',
-        poblacion: $scope.data.poblacion
+        poblacion: $scope.data.poblacion,
+        asistio: $scope.data.asistio
+
       };
 
     $http.patch(`/api/appointments/${data._id}`, appointmentData)

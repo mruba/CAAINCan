@@ -43,7 +43,8 @@ angular.module('caaincanApp').controller('appointmentCtrl', function ($scope, da
         type: $scope.data.tipo,
         poblacion: $scope.data.poblacion,
         className: ['openSesame'],
-        timezone: 'UTC'
+        timezone: 'UTC',
+        asistio: $scope.data.asistio
         };
 
     $http.post('/api/appointments/', appointmentData)

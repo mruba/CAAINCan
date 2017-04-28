@@ -13,7 +13,8 @@ var AppointmentSchema = new mongoose.Schema({
   info: String,
   type: String,
   poblacion: String,
-  active: Boolean
+  active: Boolean,
+  asistio: { type: Boolean, default: false }
 });
 
 export default mongoose.model('Appointment', AppointmentSchema);

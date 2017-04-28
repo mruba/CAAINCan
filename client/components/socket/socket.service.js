@@ -34,12 +34,29 @@ angular.module('caaincanApp')
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function(item) {
+
           var oldItem = _.find(array, {
             _id: item._id
           });
           var index = array.indexOf(oldItem);
           var event = 'created';
 
+
+          switch (item.poblacion) {
+            case 'paciente':
+              item['color'] = 'blue';
+              break;
+            case 'familiar':
+              item['color'] = 'green';
+              break;
+            case 'personal-incan':
+              item['color'] = 'red';
+              break;
+            default:
+              item['color'] = '#00BCD4';
+          }
+
+          console.log(item);
           // replace oldItem if it exists
           // otherwise just add item to the collection
           if (oldItem) {

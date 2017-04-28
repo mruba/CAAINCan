@@ -20,7 +20,7 @@
         socket.unsyncUpdates('thing');
       });
       //lets initalize the main configuration
-      console.log('configuration');
+
       this.uiConfig = {
         calendar:{
           timezone: 'UTC',
@@ -50,13 +50,11 @@
             end: '13:30'// an end time (6pm in this example)
           },
           eventDrop: function(event, delta) {
-            console.log(event);
+
             //we are ready to patch the new event
             this.editAppointment(event);
           }.bind(this),
           viewRender: function(view) {
-            console.log(view.intervalStart.toJSON());
-            console.log(view.intervalEnd.toJSON());
 
             this.viewDates.start = view.intervalStart.toJSON();
             this.viewDates.end = view.intervalEnd.toJSON();
@@ -91,36 +89,28 @@
 
       this.$http(config).then(function(response){
           // this.awesomeThings = response.data;
-          console.log(response);
           this.events.length = 0;
-          _.each(response.data, function(appointment) {
+          _.each(response.data, (appointment)=>{
             var start = new Date(appointment.start);
             var end = new Date(appointment.end);
-            // let color;
-            let color = appointment.type == 'primera-vez' ? '#ff0000' : '#00BCD4';
-
-            // switch (appointment.poblacion) {
-            //   // case 'primera-vez':
-            //   //   color = '#ff0000';
-            //   //   break;
-            //   case 'paciente':
-            //     color = 'blue';
-            //     break;
-            //   case 'familiar':
-            //     color = 'green';
-            //     break;
-            //   case 'personal-incan':
-            //     color = 'red';
-            //     break;
-            //   default:
-            //     color = '#00BCD4';
-            // }
-            //primera-vez = morado
-            //paciente = azul paciente
-            //familiar = verde familiar
-            //incan = rojo personal-incan
+            let color = '#00BCD4';
+            switch (appointment.poblacion) {
+              case 'paciente':
+                color = 'blue';
+                break;
+              case 'familiar':
+                color = 'green';
+                break;
+              case 'personal-incan':
+                color = 'red';
+                break;
+              default:
+                color = '#00BCD4';
+            }
             this.events.push({title: appointment.title, start:start , end: end, _id: appointment._id, timezone: 'UTC', color : color});
-          }.bind(this));
+          });
+          console.log(this.events);
+
           this.loading = false;
         }.bind(this));
     }
@@ -131,7 +121,7 @@
       //this.indexAppointments();
       this.socket.syncUpdates('appointment', this.events);
       this.eventSources = [this.events];
-      console.log(this.eventSources);
+
     }
 
     addAppointment(data){
@@ -139,7 +129,7 @@
       // var d = date.getDate();
       // var m = date.getMonth();
       // var y = date.getFullYear();
-      console.log('apoitment added');
+
       this.events.push(data);
 
     }
@@ -152,7 +142,7 @@
         };
       this.$http.patch(`/api/appointments/${event._id}`, eventData)
         .then(function(response){
-          console.log(response);
+
         });
     }
 
@@ -185,8 +175,6 @@
         //we  save the order only if the promise was succesfully
         // this.addAppointment(data);
         // this.events.push(data);
-        console.log(data);
-        console.log(this.eventSources);
       }.bind(this));
     }
 
@@ -220,7 +208,7 @@
         //we  save the order only if the promise was succesfully
         // this.addAppointment(data);
         // this.events.push(data);
-        console.log(this.eventSources);
+
       }.bind(this));
     }
 

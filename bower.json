@@ -2,6 +2,9 @@
   "name": "caaincan",
   "version": "0.0.0",
   "dependencies": {
+    "angular-animate": "~1.5.*",
+    "angular-aria": "~1.5.*",
+    "angular-messages": "~1.5.*",
     "angular": "~1.5.0",
     "json3": "~3.3.1",
     "es5-shim": "~3.0.1",
@@ -13,13 +16,16 @@
     "angular-sanitize": "~1.5.0",
     "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
-    "angular-socket-io": "~0.7.0",
+    "angular-socket-io": "latest",
     "angular-ui-router": "~0.2.15",
     "angular-validation-match": "~1.5.2",
-    "angular-material": "^1.1.1",
+    "angular-material": "1.1.1",
     "angular-ui-calendar": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"
+  },
+  "resolutions": {
+    "angular": "1.5.11"
   }
 }
