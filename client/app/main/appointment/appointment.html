@@ -76,9 +76,10 @@
           </md-radio-group>
         </md-input-container>
         <md-input-container class="md-block ">
-          <md-checkbox ng-model="data.asistio" aria-label="asistió" layout="row" layout-align="left center">
-              Asistió
-            </md-checkbox>
+          <md-radio-group ng-model="data.asistio" layout="row" layout-align="left center">
+            <md-radio-button ng-value="true" class="perona-incan">Asistió</md-radio-button>
+            <md-radio-button ng-value="false" class="md-primary">Faltó</md-radio-button>
+          </md-radio-group>
         </md-input-container>
 
       </form>

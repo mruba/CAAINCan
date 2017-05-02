@@ -9,10 +9,10 @@
 
 'use strict';
 
-import _ from 'lodash';
 import Appointment from './appointment.model';
 var helper = require('sendgrid').mail;
 var moment = require('moment');
+import _ from 'lodash';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -28,8 +28,9 @@ function saveUpdates(updates) {
   // sendEmail
   return function(entity) {
     console.log(entity);
-    sendEmail(entity);
+    // sendEmail(entity);
     var updated = _.merge(entity, updates);
+
     return updated.save()
       .then(updated => {
         return updated;
@@ -106,7 +107,7 @@ export function index(req, res) {
   console.log(req.query);
   return Appointment.find()
     .where('start').gt(req.query.start).lt(req.query.end)
-    .select('id start end title type').exec()
+    .select('id start end title type poblacion').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
